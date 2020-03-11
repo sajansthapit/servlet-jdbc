@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    private final static String DB_NAME = "jdbc-servlet";
+    private final static String DB_NAME = "jdbc_servlet";
     private final static String URL = "jdbc:mysql://localhost/" + DB_NAME + "?autoReconnect=true&useSSL=false";
     private final static String USER = "root";
     private final static String PASSWORD = "root";

@@ -18,12 +18,12 @@ public class UserDao {
         this.connection = connection;
     }
 
-    PreparedStatement preparedStatement = null;
+    private PreparedStatement preparedStatement = null;
 
     public boolean saveUser(User user) throws SQLException {
         String query = "INSERT INTO user (user_name, password, email, first_name, last_name, created_date, gender) VALUES (?,?,?,?,?,?,?)";
         try {
-            log.info("Creating new User with username" + user.getUsername());
+            log.info("Creating new User with username " + user.getUsername());
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
@@ -32,9 +32,14 @@ public class UserDao {
             preparedStatement.setString(5, user.getLastName());
             preparedStatement.setString(6, String.valueOf(new Date()));
             preparedStatement.setString(7, user.getGender());
-            preparedStatement.executeUpdate();
-            log.info("User saved successfully");
-            return true;
+            int result = preparedStatement.executeUpdate();
+            if(result == 1){
+                log.info("User saved successfully");
+                return true;
+            }else{
+                log.info("some error occurred");
+                return false;
+            }
         } catch (Exception e) {
             log.info("error::" + e.getMessage());
             return false;
